@@ -21,9 +21,17 @@ def createConnection(user_name, database_name, user_password, host, port):
     cursor = cnx.cursor()
     return (cnx, cursor)
 
+tempMessageEncendido=False
+humMessageEncendido=False
+humyTempEncendido=False
+
 #Solamente solo se reciben datos del emulador virtual (clase Martes 16 de Enero)
 @app.route('/sensor_data', methods=['POST'])
 def receive_sensor_data():
+    global tempMessageEncendido
+    global humMessageEncendido
+    global humyTempEncendido
+    
     if request.headers['Content-Type'] == 'application/json':
         data = request.json
 
@@ -55,12 +63,67 @@ def receive_sensor_data():
         cursor.close()
         cnx.close()
         
-        message = client.messages.create(
+        
+        #Enciende dispositivos
+        if float(humidity) > 55 and float(temperature) > 30 and not humyTempEncendido: #Este caso es donde ambos son altos
+            message = client.messages.create(
             from_='whatsapp:+14155238886',
-                body='Humedad: '+ humedad+ " temperatura:"+temperatura + " Movimiento: "+movimiento,
+            body='Humedad: '+humidity+"\nTemperatura:"+temperature+'\n\nEncendiendo deshumidificador y ventilador',
+            to='whatsapp:+5218117787532'
+            )
+            print(message.sid)
+            humyTempEncendido=True
+            humMessageEncendido=True
+            tempMessageEncendido=True
+        else:
+            if float(humidity) > 55 and not humMessageEncendido: 
+                message = client.messages.create(
+                from_='whatsapp:+14155238886',
+                body='Humedad: '+humidity+'\nEncendiendo el deshimudificador',
                 to='whatsapp:+5218117787532'
-        )
-        print(message.sid)
+                )
+                print(message.sid)
+                humMessageEncendido=True
+
+            if float(temperature) > 30 and not tempMessageEncendido:
+                message = client.messages.create(
+                from_='whatsapp:+14155238886',
+                body='Temperatura: '+temperature+'\nEncendiendo el ventilador',
+                to='whatsapp:+5218117787532'
+                )
+                print(message.sid)
+                tempMessageEncendido=True
+
+        #Apaga dispositivos
+        if float(humidity) <= 25 and float(temperature) <= 22 and humyTempEncendido:
+            message = client.messages.create(
+            from_='whatsapp:+14155238886',
+            body='Humedad: '+humidity+"\nTemperatura:"+temperature+'\n\nApagando deshumidificador y ventilador',
+            to='whatsapp:+5218117787532'
+            )
+            print(message.sid)
+            humyTempEncendido=False
+            humMessageEncendido=False
+            tempMessageEncendido=False
+        else:
+            if float(humidity) <= 25 and humMessageEncendido:
+                message = client.messages.create(
+                from_='whatsapp:+14155238886',
+                body='Humedad: '+humidity+'\nApagando el deshimudificador',
+                to='whatsapp:+5218117787532'
+                )
+                print(message.sid)
+                humMessageEncendido=False
+
+            if float(temperature) <= 22 and tempMessageEncendido:
+                message = client.messages.create(
+                from_='whatsapp:+14155238886',
+                body='Temperatura: '+temperature+'\nApagando el ventilador',
+                to='whatsapp:+5218117787532'
+                )
+                print(message.sid)
+                tempMessageEncendido=False
+        
         return 'Data received successfully.', 200
     else:
         return 'Invalid content type. Expected application/json.', 0
