@@ -1,1 +1,5 @@
 Flask==2.3.2
+twilio
+mysql.connector
+matplotlib
+pybase64

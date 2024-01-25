@@ -1,0 +1,15 @@
+{
+  "name": "codespaces-flask",
+  "version": "1.0.0",
+  "description": "Welcome to your shiny new Codespace running Flask! We've got everything fired up and running for you to explore Flask.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
