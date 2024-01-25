@@ -95,8 +95,6 @@ def hello_world():
     plt.plot(x, y1, label='Temperatura')
     plt.plot(x, y2, label='Humedad')
     plt.plot(x, y3, label='Movimiento')
-    plt.xlabel('X')
-    plt.ylabel('Y')
     plt.legend()
 
     # Guardar la gráfica en un archivo temporal
