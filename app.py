@@ -65,10 +65,10 @@ def receive_sensor_data():
         
         
         #Enciende dispositivos
-        if float(humidity) > 55 and float(temperature) > 30 and not humyTempEncendido: #Este caso es donde ambos son altos
+        if float(humedad) > 55 and float(temperatura) > 30 and not humyTempEncendido: #Este caso es donde ambos son altos
             message = client.messages.create(
             from_='whatsapp:+14155238886',
-            body='Humedad: '+humidity+"\nTemperatura:"+temperature+'\n\nEncendiendo deshumidificador y ventilador',
+            body='Humedad: '+humedad+"\nTemperatura:"+temperatura+'\n\nEncendiendo deshumidificador y ventilador',
             to='whatsapp:+5218117787532'
             )
             print(message.sid)
@@ -76,29 +76,29 @@ def receive_sensor_data():
             humMessageEncendido=True
             tempMessageEncendido=True
         else:
-            if float(humidity) > 55 and not humMessageEncendido: 
+            if float(humedad) > 55 and not humMessageEncendido: 
                 message = client.messages.create(
                 from_='whatsapp:+14155238886',
-                body='Humedad: '+humidity+'\nEncendiendo el deshimudificador',
+                body='Humedad: '+humedad+'\nEncendiendo el deshimudificador',
                 to='whatsapp:+5218117787532'
                 )
                 print(message.sid)
                 humMessageEncendido=True
 
-            if float(temperature) > 30 and not tempMessageEncendido:
+            if float(temperatura) > 30 and not tempMessageEncendido:
                 message = client.messages.create(
                 from_='whatsapp:+14155238886',
-                body='Temperatura: '+temperature+'\nEncendiendo el ventilador',
+                body='Temperatura: '+temperatura+'\nEncendiendo el ventilador',
                 to='whatsapp:+5218117787532'
                 )
                 print(message.sid)
                 tempMessageEncendido=True
 
         #Apaga dispositivos
-        if float(humidity) <= 25 and float(temperature) <= 22 and humyTempEncendido:
+        if float(humedad) <= 25 and float(temperatura) <= 22 and humyTempEncendido:
             message = client.messages.create(
             from_='whatsapp:+14155238886',
-            body='Humedad: '+humidity+"\nTemperatura:"+temperature+'\n\nApagando deshumidificador y ventilador',
+            body='Humedad: '+humedad+"\nTemperatura:"+temperatura+'\n\nApagando deshumidificador y ventilador',
             to='whatsapp:+5218117787532'
             )
             print(message.sid)
@@ -106,19 +106,19 @@ def receive_sensor_data():
             humMessageEncendido=False
             tempMessageEncendido=False
         else:
-            if float(humidity) <= 25 and humMessageEncendido:
+            if float(humedad) <= 25 and humMessageEncendido:
                 message = client.messages.create(
                 from_='whatsapp:+14155238886',
-                body='Humedad: '+humidity+'\nApagando el deshimudificador',
+                body='Humedad: '+humedad+'\nApagando el deshimudificador',
                 to='whatsapp:+5218117787532'
                 )
                 print(message.sid)
                 humMessageEncendido=False
 
-            if float(temperature) <= 22 and tempMessageEncendido:
+            if float(temperatura) <= 22 and tempMessageEncendido:
                 message = client.messages.create(
                 from_='whatsapp:+14155238886',
-                body='Temperatura: '+temperature+'\nApagando el ventilador',
+                body='Temperatura: '+temperatura+'\nApagando el ventilador',
                 to='whatsapp:+5218117787532'
                 )
                 print(message.sid)
