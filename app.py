@@ -96,6 +96,7 @@ def hello_world():
     plt.plot(x, y2, label='Humedad')
     plt.plot(x, y3, label='Movimiento')
     plt.legend()
+    plt.title("DATOS A TRAVES DEL TIEMPO")
 
     # Guardar la gráfica en un archivo temporal
     img = BytesIO()
