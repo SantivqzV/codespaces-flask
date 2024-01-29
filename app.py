@@ -2,14 +2,13 @@
 from flask import Flask, render_template, request
 import mysql.connector
 import matplotlib.pyplot as plt
-import numpy as np
 from io import BytesIO
 from twilio.rest import Client
 import base64
 
 # Asignar las claves para las variables de autenticación
 account_sid = 'AC61af772734d5e9e9d0e8a2373851e370'
-auth_token = '6ab681b12b2d1e7ed0eb81c51ae16144'
+auth_token = 'ab66843181e465714d16191a7a9dfc8d'
 client = Client(account_sid, auth_token)
 
 app = Flask(__name__)
@@ -48,7 +47,7 @@ def receive_sensor_data():
 
         #Se crea una conexión a la base de datos previamente establecida. 
         #DB name, User Name, pwd, host, port
-        cnx, cursor = createConnection('sql3678867', 'sql3678867', 'JlYRKX9QNL', 'sql3.freemysqlhosting.net', '3306')
+        cnx, cursor = createConnection('sql5680674', 'sql5680674', 'jb8y5WbCJ6', 'sql5.freemysqlhosting.net', '3306')
 
         # Se utiliza un función de inserción de sql para insertar los datos a su tabla correspondiente en la base de datos
         add_data = ("INSERT INTO INFO (temperatura, humedad, movimiento, tiempo) VALUES ("+temperatura+","+humedad+","+movimiento+",'"+tiempo+"')")
@@ -132,7 +131,7 @@ def receive_sensor_data():
 @app.route("/", methods=['GET'])
 def hello_world():
     # Create a connection to the database
-    cnx, cursor = createConnection('sql3678867', 'sql3678867', 'JlYRKX9QNL', 'sql3.freemysqlhosting.net', '3306')
+    cnx, cursor = createConnection('sql5680674', 'sql5680674', 'jb8y5WbCJ6', 'sql5.freemysqlhosting.net', '3306')
 
     # Query the database
     query = ("SELECT * FROM INFO")

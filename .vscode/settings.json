@@ -6,12 +6,12 @@
                 "enableSsl": "Disabled"
             },
             "previewLimit": 50,
-            "server": "sql3.freemysqlhosting.net",
+            "server": "sql5.freemysqlhosting.net",
             "port": 3306,
             "driver": "MySQL",
             "name": "freeMySql",
-            "database": "sql3678867",
-            "username": "sql3678867",
+            "database": "sql5680674",
+            "username": "sql5680674",
             "askForPassword": true
         }
     ]
